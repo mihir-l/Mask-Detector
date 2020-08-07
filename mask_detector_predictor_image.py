@@ -79,10 +79,8 @@ client = boto3.client('rekognition',
 
 categories = ["with_mask", "without_mask"]
 
-##while True:
 photo = input("Image")
 check(photo)
-##time.sleep(5)
 
 
 
