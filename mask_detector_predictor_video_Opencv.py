@@ -6,14 +6,9 @@ import time
 
 def prepare(img_array):
         img_size = 200
-        #img_array = cv2.imread(file)
         new_array = cv2.resize(img_array, (img_size, img_size))
         return new_array.reshape(-1, img_size, img_size, 3)
 
-
-url = "https://www.youtube.com/watch?v=EeQEzIXT8cE"
-video = pafy.new(url)
-obj = video.getbest(preftype="mp4")
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_righteye_2splits.xml')
@@ -21,7 +16,6 @@ model = tf.keras.models.load_model("mask_detector_model")
 categories = ["with_mask", "without_mask"]
 flag = 0
 cap = cv2.VideoCapture(0)
-#cap.open(obj.url)
 get_time = float(time.time())
 while True:
         ret, frame = cap.read()
