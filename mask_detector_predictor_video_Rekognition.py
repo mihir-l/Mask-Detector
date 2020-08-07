@@ -13,7 +13,6 @@ model = tf.keras.models.load_model("mask_detector_model")
 
 def prepare(img_array):
         img_size = 200
-        #img_array = cv2.imread(file)
         new_array = cv2.resize(img_array, (img_size, img_size))
         return new_array.reshape(-1, img_size, img_size, 3)
 
@@ -39,7 +38,6 @@ cap = cv2.VideoCapture(0)
 get_time = int(time.time())
 while(True):
     ret, frame = cap.read()
-    cv2.imshow('video', frame)
     
     new_time = int(time.time())
     if new_time >= get_time + 1:
@@ -53,8 +51,7 @@ while(True):
                 img_bytes = source.read()
 
         response = client.detect_faces(Image = {'Bytes':img_bytes}, Attributes = ['DEFAULT'])
-        os.remove("temp2.jpg")
-        cv2.imshow('video', frame)   
+        os.remove("temp2.jpg")  
 
         for faceDetail in response['FaceDetails']:
             
@@ -76,7 +73,6 @@ while(True):
             img1 = np.array(img)
             img1 = img1[:,:,::-1].copy()
 
-            cv2.imshow('video', frame)
             prediction = model.predict([prepare(img1)])
                     
 
@@ -95,7 +91,5 @@ while(True):
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# When everything done, release the capture
-#os.remove("new_frame.jpg")
 cap.release()
 cv2.destroyAllWindows()
